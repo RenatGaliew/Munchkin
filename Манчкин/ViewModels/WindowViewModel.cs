@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors.Core;
+using Munchkin.ViewModels;
 using Munchkin.Views;
 
 namespace Munchkin.Models
@@ -23,6 +24,7 @@ namespace Munchkin.Models
         {
             MapViewWindow w = new MapViewWindow();
             w.Show();
+            w.DataContext = new MapViewModel();
         }
     }
 }

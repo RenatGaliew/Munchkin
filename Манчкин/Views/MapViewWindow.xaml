@@ -4,7 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Munchkin.Views"
+        xmlns:models="clr-namespace:Munchkin.Models"
+        xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{x:Type viewModels:MapViewModel}"
         Title="MapViewWindow" Height="450" Width="800">
-    <local:MapView HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    <local:MapView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }"/>
 </Window>

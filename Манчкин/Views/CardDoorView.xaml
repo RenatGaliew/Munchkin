@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Munchkin.Views"
              xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type=viewModels:CardDoorViewModel}"
              d:DesignHeight="514" 
@@ -14,80 +15,141 @@
             <BitmapImage UriSource="../Resources/Goblin.png" x:Key="Goblin"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Border BorderThickness="22"
-                Background="#d2e4db"
-                CornerRadius="20">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="{Binding CardName, Mode=OneWay}"
-                               d:Text="... Infused With Chaos"
-                               TextAlignment="Center"
-                               FontSize="35"
-                               FontFamily="Comic Sans MS"
-                               TextWrapping="Wrap"
-                               FontWeight="Bold"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Center"/>
-                    <TextBlock Text="{Binding CardName2, Mode=OneWay}"
-                               d:Text="+5 to Monster"
-                               TextAlignment="Center"
-                               FontSize="30"
-                               FontFamily="Comic Sans MS"
-                               TextWrapping="Wrap"
-                               FontWeight="Bold"
-                               VerticalAlignment="Top"
-                               HorizontalAlignment="Center"></TextBlock>
-                </StackPanel>
-                <Grid Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" 
-                               Text="{Binding CardDescription, Mode=OneWay}"
-                               d:Text="    Play on a single monster; except a Chaos monster, duringany combat. That monster now counts as a Chaos monster for all purposes. If it is defeated, draw two extra treasures."
-                               VerticalAlignment="Center"
-                               FontFamily="Comic Sans MS"
-                               HorizontalAlignment="Center"
-                               TextWrapping="Wrap"
-                               TextAlignment="Left"
-                               FontSize="16">
-                    </TextBlock>
-                    <Image Grid.Row="1"
-                           Stretch="Uniform"
-                           Source="{Binding Image, Mode=OneWay}"
-                           d:Source="{StaticResource Goblin}"
-                           VerticalAlignment="Center" 
-                           HorizontalAlignment="Center"></Image>
+    <Button Command="{Binding AnimateCommad}" 
+            Padding="0"
+            Margin="0"
+            VerticalContentAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            CommandParameter="{Binding }"
+            HorizontalAlignment="Stretch" 
+            VerticalAlignment="Stretch">
+        <Button.Template>
+            <ControlTemplate TargetType="{x:Type Button}">
+                <Grid>
+                    <Border BorderThickness="22"
+                            Background="#d2e4db"
+                            BorderBrush="#ffd503"
+                            CornerRadius="22">
+                    </Border>
+                    <Border BorderThickness="4"
+                            Margin="18"
+                            x:Name="Border"
+                            Padding="0"
+                            CornerRadius="22"
+                            BorderBrush="#3879b4">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="True">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <ImageBrush ImageSource="{DynamicResource BackDoorCard}" Stretch="UniformToFill"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <ContentControl Margin="10" DataContext="{Binding .}">
+                            <ContentControl.Style>
+                                <Style TargetType="{x:Type ContentControl}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="False">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="False">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate DataType="{x:Type viewModels:CardDoorViewModel}">
+                                                            <Grid HorizontalAlignment="Stretch"
+                                                                  Background="Red"
+                                                                  Margin="0"
+                                                                  VerticalAlignment="Stretch">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="2*"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <StackPanel Grid.Row="0">
+                                                                    <TextBlock Text="{Binding CardName, Mode=OneWay}"
+                                                                       d:Text="... Infused With Chaos"
+                                                                       TextAlignment="Center"
+                                                                       FontSize="35"
+                                                                       FontFamily="Comic Sans MS"
+                                                                       TextWrapping="Wrap"
+                                                                       FontWeight="Bold"
+                                                                       VerticalAlignment="Top"
+                                                                       HorizontalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding CardName2, Mode=OneWay}"
+                                                                       d:Text="+5 to Monster"
+                                                                       TextAlignment="Center"
+                                                                       FontSize="30"
+                                                                       FontFamily="Comic Sans MS"
+                                                                       TextWrapping="Wrap"
+                                                                       FontWeight="Bold"
+                                                                       VerticalAlignment="Top"
+                                                                       HorizontalAlignment="Center"/>
+                                                                </StackPanel>
+                                                                <Grid Grid.Row="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" 
+                                                                               Text="{Binding CardDescription, Mode=OneWay}"
+                                                                               d:Text="    Play on a single monster; except a Chaos monster, duringany combat. That monster now counts as a Chaos monster for all purposes. If it is defeated, draw two extra treasures."
+                                                                               VerticalAlignment="Center"
+                                                                               FontFamily="Comic Sans MS"
+                                                                               HorizontalAlignment="Center"
+                                                                               TextWrapping="Wrap"
+                                                                               TextAlignment="Left"
+                                                                               FontSize="16"/>
+                                                                    <Image Grid.Row="1"
+                                                                           Stretch="Uniform"
+                                                                           d:Source="{StaticResource Goblin}"
+                                                                           VerticalAlignment="Center" 
+                                                                           HorizontalAlignment="Center">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="{x:Type Image}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Image, Mode=OneWay}" Value="{x:Static local:ImageID.Goblin}">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Source" Value="{DynamicResource Goblin}"></Setter>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+                                                                </Grid>
+                                                                <TextBlock Grid.Row="2" 
+                                                                           Text="{Binding TextDown, Mode=OneWay}"
+                                                                           d:Text="+2 treasures"
+                                                                           FontSize="18"
+                                                                           FontFamily="Comic Sans MS"
+                                                                           VerticalAlignment="Bottom"
+                                                                           FontWeight="DemiBold"
+                                                                           Margin="0,0,10,0"
+                                                                           HorizontalAlignment="Right"/>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Style>
+                        </ContentControl>
+                    </Border>
                 </Grid>
-               
-                <TextBlock Grid.Row="2" 
-                           Text="{Binding TextDown, Mode=OneWay}"
-                           d:Text="+2 treasures"
-                           FontSize="18"
-                           FontFamily="Comic Sans MS"
-                           VerticalAlignment="Bottom"
-                           FontWeight="DemiBold"
-                           Margin="0,0,10,0"
-                           HorizontalAlignment="Right"></TextBlock>
-            </Grid>
-        </Border>
-        
-        <Border BorderThickness="22"
-                BorderBrush="#ffd503"
-                CornerRadius="22">
-        </Border>
-        <Border BorderThickness="4"
-                Margin="18"
-                BorderBrush="#3879b4"
-                CornerRadius="22">
-        </Border>
-    </Grid>
-
+            </ControlTemplate>
+        </Button.Template>
+    </Button>
 </UserControl>

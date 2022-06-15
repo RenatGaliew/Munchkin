@@ -8,16 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\BackDoorCard.png" />
+    <None Remove="Resources\cardholder.jpg" />
+    <None Remove="Resources\Goblin.png" />
     <None Remove="Resources\map.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Catel.MVVM" Version="5.12.22" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="4.11.0" />
     <PackageReference Include="Npgsql" Version="6.0.4" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\BackDoorCard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\cardholder.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </Resource>
+    <Resource Include="Resources\Goblin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

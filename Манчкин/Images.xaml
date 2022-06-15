@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    x:Class="Munchkin.ImagesResources"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BitmapImage x:Key="Goblin" UriSource="Resources/Goblin.png" options:Freeze="True"/>
+    <BitmapImage x:Key="СardHolder" UriSource="Resources/cardholder.jpg" options:Freeze="True"/>
+    <BitmapImage x:Key="BackDoorCard" UriSource="Resources/BackDoorCard.png" options:Freeze="True"/>
+</ResourceDictionary>

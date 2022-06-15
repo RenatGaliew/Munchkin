@@ -3,17 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Munchkin.Views"
+             xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
+             xmlns:views="clr-namespace:Munchkin.Views"
              mc:Ignorable="d" 
              d:DesignHeight="1080"
              d:DesignWidth="1920"
+             d:DataContext="{d:DesignInstance Type=viewModels:MapViewModel}"
              VerticalAlignment="Stretch"
+             Background="AliceBlue"
              HorizontalAlignment="Stretch">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <BitmapImage UriSource="../Resources/map.png" x:Key="BitmapImageMap"/>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListView ItemsSource="{Binding Cards, Mode=OneWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type viewModels:CardDoorViewModel}">
+                    <views:CardDoorView DataContext="{Binding }" Height="300" Width="200"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>
