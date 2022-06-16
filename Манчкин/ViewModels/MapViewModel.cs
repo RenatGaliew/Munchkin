@@ -1,49 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 using Catel.Data;
 using Catel.MVVM;
 using Munchkin.Models;
+using Munchkin.Models.Cards;
 using Munchkin.Views;
 
 namespace Munchkin.ViewModels
 {
     public class MapViewModel : ViewModelBase
     {
-        public static readonly PropertyData CardsProperty = RegisterProperty<MapViewModel, ObservableCollection<CardDoorViewModel>>(x => x.Cards);
+        public static readonly PropertyData CardsProperty = RegisterProperty<MapViewModel, CardDoorViewModel>(x => x.Card);
+        public static readonly PropertyData CardWeaponProperty = RegisterProperty<MapViewModel, CardWeaponViewModel>(x => x.CardWeapon);
 
-        public ObservableCollection<CardDoorViewModel> Cards
+        public CardDoorViewModel Card
         {
-            get => GetValue<ObservableCollection<CardDoorViewModel>>(CardsProperty);
+            get => GetValue<CardDoorViewModel>(CardsProperty);
             set => SetValue(CardsProperty, value);
+        }
+        
+        public CardWeaponViewModel CardWeapon
+        {
+            get => GetValue<CardWeaponViewModel>(CardWeaponProperty);
+            set => SetValue(CardWeaponProperty, value);
         }
 
         public MapViewModel()
         {
-            Cards = new ObservableCollection<CardDoorViewModel>();
-            Cards.Add(new CardDoorViewModel(new CardDoor()
+            Card = new CardDoorViewModel(new CardDoor()
             {
-                CardDescription = "Играй вместе с монстром с руки в любой бой (можно и в свой). Твой монстр присоединяется к тем, что уже бьются, - сложи их боевые силы. При поражении манчкин бившийся с ними делает отдельные броски смывки в любом угодном ему порядке.",
+                CardDescription =
+                    "Играй вместе с монстром с руки в любой бой (можно и в свой). Твой монстр присоединяется к тем, что уже бьются, - сложи их боевые силы. При поражении манчкин бившийся с ними делает отдельные броски смывки в любом угодном ему порядке.",
                 CardName = "Бродячая тварь",
                 CardName2 = "",
                 TextDown = "",
                 Image = ImageID.Goblin
-            }));
-            Cards.Add(new CardDoorViewModel(new CardDoor()
+            });
+
+            CardWeapon = new CardWeaponViewModel(new CardWeapon()
             {
-                CardDescription = "Играй в любой бой на любого монстра. Побежденный шипастый монстр даёт на одно сокровище больше",
-                CardName = "Шипастый",
-                CardName2 = "+5 МОНСТРУ",
-                TextDown = "+1 сокровище",
-                Image = ImageID.Goblin
-            }));
+                Bonus = "Бонус +3",
+                CardDescription = "Это огненная/ пламенная атака",
+                CardName = "Электромагнитный бластер",
+                TypeOfAttack = TypeOfAttack.Fire,
+                WeaponClass = WeaponClass.OneHand,
+                GoldInt = 400,
+                BonusInt = 3,
+                Image = ImageID.Weapon,
+                SpecialFor = Army.Ork
+            });
         }
 
         public byte[] ImageToByteArray(BitmapImage imageIn)

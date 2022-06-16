@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using Munchkin.Models.Cards;
 using Munchkin.Views;
 
 namespace Munchkin.Models
 {
-    public class CardDoor
+    public class CardDoor : ICard
     {
         public ImageID Image { get; set; }
         public string CardName { get; set; }

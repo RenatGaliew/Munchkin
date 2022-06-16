@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
-             xmlns:views="clr-namespace:Munchkin.Views"
+             xmlns:cards="clr-namespace:Munchkin.Views.Cards"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:Munchkin.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="1080"
              d:DesignWidth="1920"
@@ -12,13 +14,32 @@
              VerticalAlignment="Stretch"
              Background="AliceBlue"
              HorizontalAlignment="Stretch">
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewModels:CardDoorViewModel}">
+            <cards:CardGainView Width="180" Height="280"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:CardWeaponViewModel}">
+            <cards:CardWeaponView Width="180" Height="280"/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <ListView ItemsSource="{Binding Cards, Mode=OneWay}">
-            <ListView.ItemTemplate>
-                <DataTemplate DataType="{x:Type viewModels:CardDoorViewModel}">
-                    <views:CardDoorView DataContext="{Binding }" Height="300" Width="200"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Row="0" Width="180" Height="280"
+                        DataContext="{Binding Card, Mode=OneWay}" 
+                        Content="{Binding Mode=OneWay}">
+            <b:Interaction.Behaviors>
+                <behaviors:TurnOverBehavior ToRight="False"/>
+            </b:Interaction.Behaviors>
+        </ContentControl>
+        <ContentControl Grid.Row="1" DataContext="{Binding CardWeapon, Mode=OneWay}"
+                        Width="180" Height="280"
+                        Content="{Binding Mode=OneWay}">
+            <b:Interaction.Behaviors>
+                <behaviors:TurnOverBehavior ToRight="False"/>
+            </b:Interaction.Behaviors>
+        </ContentControl>
     </Grid>
 </UserControl>

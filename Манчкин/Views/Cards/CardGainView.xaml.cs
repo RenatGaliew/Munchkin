@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace Munchkin.Views
+namespace Munchkin.Views.Cards
 {
     /// <summary>
     /// Interaction logic for Card.xaml
     /// </summary>
-    public partial class CardDoorView : UserControl
+    public partial class CardGainView : UserControl
     {
-        public CardDoorView()
+        public CardGainView()
         {
             InitializeComponent();
         }

@@ -8,6 +8,7 @@ namespace Munchkin.Views
 {
     public enum ImageID
     {
-        Goblin
+        Goblin,
+        Weapon
     }
 }

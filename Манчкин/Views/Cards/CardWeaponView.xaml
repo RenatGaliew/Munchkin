@@ -1,0 +1,299 @@
+﻿<UserControl x:Class="Munchkin.Views.Cards.CardWeaponView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Munchkin.Views"
+             xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:Munchkin.Behaviors"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type=viewModels:CardWeaponViewModel}"
+             d:DesignHeight="310" 
+             d:DesignWidth="200">
+    <Button Command="{Binding AnimateCommad}" 
+            Name="AnimatedWidthButton"
+            Width="180"
+            Height="280"
+            Padding="0"
+            Margin="0"
+            VerticalContentAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            CommandParameter="{Binding }"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch">
+        <Button.RenderTransform>
+            <ScaleTransform x:Name="AnimatedScaleTransform" ScaleX="1" ScaleY="1" CenterX="90" CenterY="140"></ScaleTransform>
+        </Button.RenderTransform>
+        <Button.Triggers>
+            <EventTrigger RoutedEvent="Button.MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="AnimatedScaleTransform"
+                                         Storyboard.TargetProperty="ScaleX"
+                                         From="1" To="1.3" Duration="0:0:0.100">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseIn"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Storyboard.TargetName="AnimatedScaleTransform"
+                                         Storyboard.TargetProperty="ScaleY"
+                                         From="1" To="1.3" Duration="0:0:0.100">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseIn"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Button.MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="AnimatedScaleTransform"
+                                         Storyboard.TargetProperty="ScaleX" 
+                                         From="1.3" To="1" Duration="0:0:0.100">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                        <DoubleAnimation Storyboard.TargetName="AnimatedScaleTransform"
+                                         Storyboard.TargetProperty="ScaleY"
+                                         From="1.3" To="1" Duration="0:0:0.100">
+                            <DoubleAnimation.EasingFunction>
+                                <QuarticEase EasingMode="EaseOut"/>
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Button.Triggers>
+        <Button.Effect>
+            <DropShadowEffect BlurRadius="17" Color="#FF8B8B8B" ShadowDepth="0"/>
+        </Button.Effect>
+        <Button.Template>
+            <ControlTemplate TargetType="{x:Type Button}">
+                <Grid>
+                    <Border BorderThickness="6"
+                            Background="#d2e4db"
+                            BorderBrush="#3879b4"
+                            CornerRadius="20">
+                    </Border>
+                    <Border BorderThickness="3"
+                            Margin="4"
+                            x:Name="Border"
+                            Padding="0"
+                            CornerRadius="20"
+                            BorderBrush="#ffd503">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="True">
+                                        <DataTrigger.Setters>
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <ImageBrush ImageSource="{DynamicResource BackDoorCard}" Stretch="UniformToFill"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <ContentControl Margin="6,0,6,6">
+                            <ContentControl.Style>
+                                <Style TargetType="{x:Type ContentControl}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="False">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsCover, Mode=OneWay}" Value="False">
+                                            <DataTrigger.Setters>
+                                                <Setter Property="Content" Value="{Binding .}"/>
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="ContentTemplate">
+                                                    <Setter.Value>
+                                                        <DataTemplate DataType="{x:Type viewModels:CardWeaponViewModel}">
+                                                            <Grid HorizontalAlignment="Stretch"
+                                                                  Background="Transparent"
+                                                                  Margin="0"
+                                                                  VerticalAlignment="Stretch">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <StackPanel Grid.Row="0" Background="Transparent">
+                                                                    <TextBlock Text="{Binding Bonus, Mode=OneWay}"
+                                                                       d:Text="Бонус +3"
+                                                                       TextAlignment="Center"
+                                                                       FontFamily="Comic Sans MS"
+                                                                       FontSize="10"
+                                                                       TextWrapping="Wrap"
+                                                                       FontWeight="Bold"
+                                                                       VerticalAlignment="Top"
+                                                                       HorizontalAlignment="Center">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Bonus, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="{Binding SpecialForName, Mode=OneWay}"
+                                                                       d:Text="Только для тиранидов"
+                                                                       FontSize="8"
+                                                                       TextAlignment="Center"
+                                                                       FontFamily="Comic Sans MS"
+                                                                       TextWrapping="Wrap"
+                                                                       FontWeight="Bold"
+                                                                       VerticalAlignment="Top"
+                                                                       HorizontalAlignment="Center">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding SpecialForName, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                    <TextBlock Text="{Binding CardName, Mode=OneWay}"
+                                                                       d:Text="+5 to Monster"
+                                                                       FontSize="12"
+                                                                       TextAlignment="Center"
+                                                                       FontFamily="Comic Sans MS"
+                                                                       TextWrapping="Wrap"
+                                                                       FontWeight="Bold"
+                                                                       VerticalAlignment="Top"
+                                                                       HorizontalAlignment="Center">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding CardName, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                </StackPanel>
+                                                                <Grid Grid.Row="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" 
+                                                                               Text="{Binding CardDescription, Mode=OneWay}"
+                                                                               d:Text="Это огненная/ пламенная атака"
+                                                                               VerticalAlignment="Center"
+                                                                               FontFamily="Comic Sans MS"
+                                                                               FontSize="8"
+                                                                               HorizontalAlignment="Left"
+                                                                               TextWrapping="Wrap"
+                                                                               TextAlignment="Left">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding CardDescription, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                    <Image Grid.Row="1"
+                                                                           Stretch="Uniform"
+                                                                           d:Source="{DynamicResource Weapon}"
+                                                                           VerticalAlignment="Center" 
+                                                                           HorizontalAlignment="Center">
+                                                                        <Image.Style>
+                                                                            <Style TargetType="{x:Type Image}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Image, Mode=OneWay}" Value="{x:Static local:ImageID.Weapon}">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Source" Value="{DynamicResource Weapon}"></Setter>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </Image.Style>
+                                                                    </Image>
+                                                                </Grid>
+                                                                <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Stretch">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <TextBlock Grid.Column="0" 
+                                                                               Text="{Binding WeaponClassName, Mode=OneWay}"
+                                                                               d:Text="в 1 руку"
+                                                                               FontSize="8"
+                                                                               FontFamily="Comic Sans MS"
+                                                                               VerticalAlignment="Bottom"
+                                                                               FontWeight="DemiBold"
+                                                                               HorizontalAlignment="Left">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding WeaponClassName, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                    <TextBlock Grid.Column="1" 
+                                                                               Text="{Binding Gold, Mode=OneWay}"
+                                                                               d:Text="400 голдов"
+                                                                               FontSize="8"
+                                                                               FontFamily="Comic Sans MS"
+                                                                               VerticalAlignment="Bottom"
+                                                                               FontWeight="DemiBold"
+                                                                               HorizontalAlignment="Right">
+                                                                        <TextBlock.Style>
+                                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                                <Style.Triggers>
+                                                                                    <DataTrigger Binding="{Binding Gold, Mode=OneWay}" Value="">
+                                                                                        <DataTrigger.Setters>
+                                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                                        </DataTrigger.Setters>
+                                                                                    </DataTrigger>
+                                                                                </Style.Triggers>
+                                                                            </Style>
+                                                                        </TextBlock.Style>
+                                                                    </TextBlock>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger.Setters>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContentControl.Style>
+                        </ContentControl>
+                    </Border>
+                </Grid>
+            </ControlTemplate>
+        </Button.Template>
+    </Button>
+
+</UserControl>
