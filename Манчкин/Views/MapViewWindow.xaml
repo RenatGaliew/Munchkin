@@ -7,7 +7,15 @@
         xmlns:models="clr-namespace:Munchkin.Models"
         xmlns:viewModels="clr-namespace:Munchkin.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{x:Type viewModels:MapViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewModels:MapViewModel}"
         Title="MapViewWindow" Height="450" Width="800">
-    <local:MapView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }"/>
+    <Grid>
+        <local:MapView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding }"/>
+        <local:CardsOnHandView DataContext="{Binding CardsOnHandViewModel, Mode=OneWay}" 
+                               HorizontalContentAlignment="Center" 
+                               HorizontalAlignment="Stretch"
+                               Margin="0,0,0,-200"
+                               VerticalAlignment="Stretch"
+                               VerticalContentAlignment="Stretch"/>
+    </Grid>
 </Window>

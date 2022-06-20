@@ -12,6 +12,7 @@ namespace Munchkin.ViewModels
     {
         public static readonly PropertyData CardsProperty = RegisterProperty<MapViewModel, CardDoorViewModel>(x => x.Card);
         public static readonly PropertyData CardWeaponProperty = RegisterProperty<MapViewModel, CardWeaponViewModel>(x => x.CardWeapon);
+        public static readonly PropertyData CardOnHandsViewModelProperty = RegisterProperty<MapViewModel, CardOnHandsViewModel>(x => x.CardsOnHandViewModel);
 
         public CardDoorViewModel Card
         {
@@ -23,6 +24,11 @@ namespace Munchkin.ViewModels
         {
             get => GetValue<CardWeaponViewModel>(CardWeaponProperty);
             set => SetValue(CardWeaponProperty, value);
+        }
+        public CardOnHandsViewModel CardsOnHandViewModel
+        {
+            get => GetValue<CardOnHandsViewModel>(CardOnHandsViewModelProperty);
+            set => SetValue(CardOnHandsViewModelProperty, value);
         }
 
         public MapViewModel()
@@ -49,6 +55,7 @@ namespace Munchkin.ViewModels
                 Image = ImageID.Weapon,
                 SpecialFor = Army.Ork
             });
+            CardsOnHandViewModel = new CardOnHandsViewModel();
         }
 
         public byte[] ImageToByteArray(BitmapImage imageIn)
